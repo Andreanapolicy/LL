@@ -4,4 +4,8 @@ project(LL)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
-add_executable(LL main.cpp)
+add_executable(LL
+               main.cpp
+               src/App/IModelParser.h
+               src/Infrastructure/ModelParser.cpp
+               src/Infrastructure/ModelParser.h)

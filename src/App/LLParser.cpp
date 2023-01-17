@@ -44,21 +44,20 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 			stack.push(currentRulePos + 1);
 		}
 
-		if (currentRule.pointers.empty())
+		if (currentRule.pointer.has_value())
 		{
-			if (stack.empty())
-			{
-				throw std::runtime_error("exp is incorrect");
-			}
-
+			currentRulePos = currentRule.pointer.value();
+			currentRule = model.at(currentRulePos);
+		}
+		else if (!stack.empty())
+		{
 			currentRulePos = stack.top();
 			currentRule = model.at(currentRulePos);
 			stack.pop();
 		}
 		else
 		{
-			currentRulePos = currentRule.pointers.at(0);
-			currentRule = model.at(currentRulePos);
+			throw std::runtime_error("exp is incorrect");
 		}
 	}
 

@@ -4,6 +4,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 {
 	Model model;
 
+	// TODO: remove mock model, implement parsing
 	model[1] = {
 		'S', false, { 'a', 'c' }, false, true, { 2 }, false, false
 	};
@@ -14,7 +15,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 		'B', false, { 'b' }, false, true, { 10 }, true, false
 	};
 	model[4] = {
-		'F', true, { 'F' }, true, true, {}, false, true
+		'F', true, { 'F' }, true, true, std::nullopt, false, true
 	};
 	model[5] = {
 		'A', false, { 'a' }, false, false, { 7 }, false, false
@@ -26,7 +27,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 		'a', true, {
 					   'a',
 				   },
-		true, true, {}, false, false
+		true, true, std::nullopt, false, false
 	};
 	model[8] = {
 		'c', true, { 'c' }, true, true, { 9 }, false, false

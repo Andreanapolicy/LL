@@ -1,6 +1,6 @@
 #include "src/App/LLParser.h"
+#include "src/Infrastructure/InputReader.h"
 #include "src/Infrastructure/ModelProvider.h"
-#include <fstream>
 #include <iostream>
 
 namespace
@@ -30,17 +30,12 @@ int main(int argc, char** argv)
 	try
 	{
 		auto const args = ParseArgs(argc, argv);
-		std::ifstream input(args.inputFilename);
 
-		if (!input.is_open())
-		{
-			throw std::runtime_error("Cannot open input file");
-		}
+		LLParser parser(
+			std::make_unique<ModelProvider>(),
+			std::make_unique<InputReader>());
 
-		std::string data((std::istreambuf_iterator<char>(input)), std::istreambuf_iterator<char>());
-
-		LLParser parser(std::make_unique<ModelProvider>());
-		parser.Parse(args.modelFilename, data);
+		parser.Parse(args.modelFilename, args.inputFilename);
 	}
 	catch (std::exception const& e)
 	{

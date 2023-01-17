@@ -10,4 +10,4 @@ add_executable(LL
                src/Infrastructure/ModelProvider.cpp
                src/Infrastructure/ModelProvider.h
                src/App/LLParser.cpp
-               src/App/LLParser.h)
+               src/App/LLParser.h src/App/IInputReader.h src/Infrastructure/InputReader.cpp src/Infrastructure/InputReader.h)

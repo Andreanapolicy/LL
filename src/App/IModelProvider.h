@@ -8,7 +8,6 @@
 struct Rule
 {
 	char symbol;
-	bool isTerminal;
 	std::vector<char> leadingSymbols;
 	bool shift;
 	bool error;

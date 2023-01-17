@@ -6,8 +6,13 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 add_executable(LL
                main.cpp
+               src/Common/Args.cpp
+               src/Common/Args.h
                src/App/IModelProvider.h
+               src/App/LLParser.cpp
+               src/App/LLParser.h
+               src/App/IInputReader.h
                src/Infrastructure/ModelProvider.cpp
                src/Infrastructure/ModelProvider.h
-               src/App/LLParser.cpp
-               src/App/LLParser.h src/App/IInputReader.h src/Infrastructure/InputReader.cpp src/Infrastructure/InputReader.h)
+               src/Infrastructure/InputReader.cpp
+               src/Infrastructure/InputReader.h)

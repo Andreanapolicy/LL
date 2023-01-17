@@ -4,7 +4,7 @@
 #include <unordered_map>
 #include <vector>
 
-struct Entry
+struct Rule
 {
 	char symbol;
 	bool isTerminal;
@@ -16,10 +16,12 @@ struct Entry
 	bool endParsing;
 };
 
-using Model = std::unordered_map<std::size_t, Entry>;
+using Model = std::unordered_map<std::size_t, Rule>;
 
-class IModelParser
+class IModelProvider
 {
 public:
-	virtual Model Parse(std::string const& filename) = 0;
+	virtual Model GetModel(std::string const& filename) = 0;
+
+	virtual ~IModelProvider() = default;
 };

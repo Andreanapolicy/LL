@@ -6,6 +6,8 @@ set(CMAKE_EXE_LINKER_FLAGS "-static")
 
 add_executable(LL
                main.cpp
-               src/App/IModelParser.h
-               src/Infrastructure/ModelParser.cpp
-               src/Infrastructure/ModelParser.h)
+               src/App/IModelProvider.h
+               src/Infrastructure/ModelProvider.cpp
+               src/Infrastructure/ModelProvider.h
+               src/App/LLParser.cpp
+               src/App/LLParser.h)

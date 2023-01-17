@@ -7,10 +7,11 @@
 struct Entry
 {
 	char symbol;
+	bool isTerminal;
 	std::vector<char> leadingSymbols;
 	bool shift;
 	bool error;
-	std::size_t pointer;
+	std::vector<std::size_t> pointers; // For alternatives, e.g. <F> -> -<F>| (<EXP>) | a | b | 8 | 3
 	bool saveToStack;
 	bool endParsing;
 };

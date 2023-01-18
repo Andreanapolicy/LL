@@ -61,7 +61,7 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 		}
 	}
 
-	if (inputPos + 1 < input.length())
+	if (inputPos + 1 != input.length())
 	{
 		throw std::runtime_error("exp is incorrect");
 	}

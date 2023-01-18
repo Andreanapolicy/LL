@@ -29,7 +29,7 @@ TEST_CASE("invalid end2end cases")
 {
 	std::string const modelFilename = "../model/table.csv";
 
-	std::string const testFile = GENERATE("invalid-end");
+	std::string const testFile = GENERATE("invalid-parentheses");
 	auto const inputFilename = "files/" + testFile + ".txt";
 
 	LLParser parser(

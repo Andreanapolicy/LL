@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -7,11 +8,10 @@
 struct Rule
 {
 	char symbol;
-	bool isTerminal;
 	std::vector<char> leadingSymbols;
 	bool shift;
 	bool error;
-	std::vector<std::size_t> pointers; // For alternatives, e.g. <F> -> -<F>| (<EXP>) | a | b | 8 | 3
+	std::optional<std::size_t> pointer;
 	bool saveToStack;
 	bool endParsing;
 };

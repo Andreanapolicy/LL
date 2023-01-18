@@ -4,6 +4,9 @@ project(LL)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_EXE_LINKER_FLAGS "-static")
 
+add_library(catch2 INTERFACE)
+target_include_directories(catch2 INTERFACE catch2/)
+
 add_executable(LL
                main.cpp
                src/Common/Args.cpp
@@ -16,3 +19,5 @@ add_executable(LL
                src/Infrastructure/ModelProvider.h
                src/Infrastructure/InputReader.cpp
                src/Infrastructure/InputReader.h)
+
+add_subdirectory(tests)

@@ -10,7 +10,7 @@ public:
 private:
 	using Spreadsheet = std::vector<std::vector<std::string>>;
 
-	static auto const CSV_SEPARATOR = ' ';
+	static auto const CSV_SEPARATOR = ';';
 
 	static Spreadsheet GetDataFromFile(std::string const& filename);
 };

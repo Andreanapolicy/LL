@@ -15,7 +15,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 		size_t number;
 		ss_number >> number;
 
-		char symbol = row[1][0];
+		auto const symbol = row[1];
 
 		std::vector<char> leadingSymbols;
 		std::string symbols = row[2];

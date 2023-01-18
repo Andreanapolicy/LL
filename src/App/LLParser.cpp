@@ -14,7 +14,7 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 
 	std::size_t inputPos = 0;
 	std::size_t currentRulePos = 1;
-	Rule& currentRule = model.at(currentRulePos);
+	Rule currentRule = model.at(currentRulePos);
 
 	std::stack<std::size_t> stack;
 
@@ -61,7 +61,7 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 		}
 	}
 
-	if (inputPos + 1 != input.length())
+	if (inputPos != input.length())
 	{
 		throw std::runtime_error("exp is incorrect");
 	}

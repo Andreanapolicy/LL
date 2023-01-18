@@ -7,7 +7,7 @@
 
 struct Rule
 {
-	char symbol;
+	std::string symbol;
 	std::vector<char> leadingSymbols;
 	bool shift;
 	bool error;

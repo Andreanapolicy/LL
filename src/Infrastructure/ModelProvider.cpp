@@ -1,51 +1,56 @@
 #include <fstream>
 #include <sstream>
+#include <iostream>
 #include "ModelProvider.h"
 
 Model ModelProvider::GetModel(std::string const& filename)
 {
+	Spreadsheet spreadsheet = GetDataFromFile(filename);
+
 	Model model;
 
-	// TODO: remove mock model, implement parsing
-	model[1] = {
-		'S', { 'a', 'c' }, false, true, { 2 }, false, false
-	};
-	model[2] = {
-		'A', { 'a', 'c' }, false, true, { 5 }, true, false
-	};
-	model[3] = {
-		'B', { 'b' }, false, true, { 10 }, true, false
-	};
-	model[4] = {
-		'F', { 'F' }, true, true, std::nullopt, false, true
-	};
-	model[5] = {
-		'A', { 'a' }, false, false, { 7 }, false, false
-	};
-	model[6] = {
-		'A', { 'c' }, false, true, { 8 }, false, false
-	};
-	model[7] = {
-		'a', {
-				 'a',
-			 },
-		true, true, std::nullopt, false, false
-	};
-	model[8] = {
-		'c', { 'c' }, true, true, { 9 }, false, false
-	};
-	model[9] = {
-		'A', { 'a', 'c' }, false, true, { 5 }, false, false
-	};
-	model[10] = {
-		'B', { 'b' }, false, true, { 11 }, false, false
-	};
-	model[11] = {
-		'b', { 'b' }, true, true, { 12 }, false, false
-	};
-	model[12] = {
-		'A', { 'a', 'c' }, false, true, { 5 }, false, false
-	};
+	for(const auto& row : spreadsheet)
+	{
+		std::stringstream ss_number(row[0]);
+		size_t number;
+		ss_number >> number;
+
+		char symbol = row[1][0];
+
+		std::vector<char> leadingSymbols;
+		std::string symbols = row[2];
+		for (auto current_symbol : symbols)
+		{
+			if (current_symbol != ',')
+			{
+				leadingSymbols.push_back(current_symbol);
+			}
+		}
+
+		bool shift = GetField(row[3]);
+
+		bool error = GetField(row[4]);
+
+		std::optional<std::size_t> pointer;
+		std::stringstream ss_result(row[5]);
+		size_t result = 0;
+		ss_result >> result;
+		pointer = row[4] == FIELD_NULL ? std::nullopt : std::optional(result);
+
+		bool saveToStack = GetField(row[6]);
+
+		bool endParsing = GetField(row[6]);
+
+		model[number] = {
+			.symbol = symbol,
+			.leadingSymbols = leadingSymbols,
+			.shift = shift,
+			.error = error,
+			.pointer = pointer,
+			.saveToStack = saveToStack,
+			.endParsing = endParsing
+		};
+	}
 
 	return model;
 }
@@ -76,4 +81,18 @@ ModelProvider::Spreadsheet ModelProvider::GetDataFromFile(std::string const& fil
 	}
 
 	return spreadsheet;
+}
+
+bool ModelProvider::GetField(std::string const& field)
+{
+	if (field == FIELD_YES)
+	{
+		return true;
+	}
+	if (field == FIELD_NO)
+	{
+		return false;
+	}
+
+	throw std::runtime_error("Unknown field type");
 }

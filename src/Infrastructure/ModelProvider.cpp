@@ -1,7 +1,7 @@
-#include <fstream>
-#include <sstream>
-#include <iostream>
 #include "ModelProvider.h"
+#include <fstream>
+#include <iostream>
+#include <sstream>
 
 Model ModelProvider::GetModel(std::string const& filename)
 {
@@ -9,7 +9,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 
 	Model model;
 
-	for(const auto& row : spreadsheet)
+	for (auto const& row : spreadsheet)
 	{
 		std::stringstream ss_number(row[0]);
 		size_t number;
@@ -27,19 +27,17 @@ Model ModelProvider::GetModel(std::string const& filename)
 			}
 		}
 
-		bool shift = GetField(row[3]);
-
-		bool error = GetField(row[4]);
+		bool shift = GetBoolField(row[3]);
+		bool error = GetBoolField(row[4]);
 
 		std::optional<std::size_t> pointer;
-		std::stringstream ss_result(row[5]);
-		size_t result = 0;
-		ss_result >> result;
-		pointer = row[4] == FIELD_NULL ? std::nullopt : std::optional(result);
+		if (row[5] != FIELD_NULL)
+		{
+			pointer = GetIntField(row[5]);
+		}
 
-		bool saveToStack = GetField(row[6]);
-
-		bool endParsing = GetField(row[6]);
+		bool saveToStack = GetBoolField(row[6]);
+		bool endParsing = GetBoolField(row[7]);
 
 		model[number] = {
 			.symbol = symbol,
@@ -83,7 +81,7 @@ ModelProvider::Spreadsheet ModelProvider::GetDataFromFile(std::string const& fil
 	return spreadsheet;
 }
 
-bool ModelProvider::GetField(std::string const& field)
+bool ModelProvider::GetBoolField(std::string const& field)
 {
 	if (field == FIELD_YES)
 	{
@@ -95,4 +93,14 @@ bool ModelProvider::GetField(std::string const& field)
 	}
 
 	throw std::runtime_error("Unknown field type");
+}
+
+std::size_t ModelProvider::GetIntField(std::string const& field)
+{
+	std::size_t result;
+
+	std::stringstream stream(field);
+	stream >> result;
+
+	return result;
 }

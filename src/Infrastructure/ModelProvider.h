@@ -10,11 +10,13 @@ public:
 private:
 	using Spreadsheet = std::vector<std::vector<std::string>>;
 
-	static auto const CSV_SEPARATOR = ';';
-	constexpr static auto const FIELD_NO = "No";
-	constexpr static auto const FIELD_YES = "Yes";
-	constexpr static auto const FIELD_NULL = "NULL";
+	static constexpr auto CSV_SEPARATOR = ';';
+	static constexpr auto FIELD_NO = "No";
+	static constexpr auto FIELD_YES = "Yes";
+	static constexpr auto FIELD_NULL = "NULL";
 
 	static Spreadsheet GetDataFromFile(std::string const& filename);
-	bool GetField(std::string const& field);
+
+	static bool GetBoolField(std::string const& field);
+	static std::size_t GetIntField(std::string const& field);
 };

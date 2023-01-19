@@ -17,15 +17,7 @@ Model ModelProvider::GetModel(std::string const& filename)
 
 		auto const symbol = row[1];
 
-		std::vector<char> leadingSymbols;
-		std::string symbols = row[2];
-		for (auto current_symbol : symbols)
-		{
-			if (current_symbol != ',')
-			{
-				leadingSymbols.push_back(current_symbol);
-			}
-		}
+		auto const leadingSymbols = GetLeadingSymbols(row[2]);
 
 		bool shift = GetBoolField(row[3]);
 		bool error = GetBoolField(row[4]);
@@ -79,6 +71,24 @@ ModelProvider::Spreadsheet ModelProvider::GetDataFromFile(std::string const& fil
 	}
 
 	return spreadsheet;
+}
+
+std::vector<char> ModelProvider::GetLeadingSymbols(std::string const& field)
+{
+	std::vector<char> result;
+	for (auto&& current_symbol : field)
+	{
+		if (current_symbol == '0')
+		{
+			result.push_back(EMPTY_SYMBOL);
+		}
+		else if (current_symbol != ',')
+		{
+			result.push_back(current_symbol);
+		}
+	}
+
+	return result;
 }
 
 bool ModelProvider::GetBoolField(std::string const& field)

@@ -18,9 +18,9 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 
 	std::stack<std::size_t> stack;
 
-	while (!currentRule.endParsing)
+	while (!currentRule.endParsing || !stack.empty())
 	{
-		if (!CharacterMatches(input.at(inputPos), currentRule.leadingSymbols))
+		if (!CharacterMatches(GetInputChar(input, inputPos), currentRule.leadingSymbols))
 		{
 			if (currentRule.error)
 			{
@@ -67,12 +67,22 @@ void LLParser::Parse(std::string const& modelFilename, std::string const& inputF
 	}
 }
 
+char LLParser::GetInputChar(std::string const& input, std::size_t position)
+{
+	if (position == input.length())
+	{
+		return 0;
+	}
+
+	return input.at(position);
+}
+
 bool LLParser::CharacterMatches(char ch, std::vector<char> const& leadingSymbols)
 {
 	return std::any_of(
 		leadingSymbols.begin(),
 		leadingSymbols.end(),
 		[ch](char symbol) {
-			return ch == symbol;
+			return ch == symbol || symbol == EMPTY_SYMBOL;
 		});
 }

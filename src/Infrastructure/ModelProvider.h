@@ -17,6 +17,7 @@ private:
 
 	static Spreadsheet GetDataFromFile(std::string const& filename);
 
+	static std::vector<char> GetLeadingSymbols(std::string const& field);
 	static bool GetBoolField(std::string const& field);
 	static std::size_t GetIntField(std::string const& field);
 };

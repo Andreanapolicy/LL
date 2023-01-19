@@ -16,6 +16,8 @@ struct Rule
 	bool endParsing;
 };
 
+constexpr auto EMPTY_SYMBOL = 0;
+
 using Model = std::unordered_map<std::size_t, Rule>;
 
 class IModelProvider

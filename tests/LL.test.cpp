@@ -9,7 +9,11 @@ TEST_CASE("valid end2end cases")
 {
 	std::string const modelFilename = "../model/table.csv";
 
-	std::string const testFile = GENERATE("simple");
+	std::string const testFile = GENERATE(
+		"valid-example",
+		"valid-minus-and-parentheses",
+		"valid-only-symbol",
+		"valid-two-minuses");
 	auto const inputFilename = "files/" + testFile + ".txt";
 
 	LLParser parser(
@@ -29,7 +33,11 @@ TEST_CASE("invalid end2end cases")
 {
 	std::string const modelFilename = "../model/table.csv";
 
-	std::string const testFile = GENERATE("invalid-parentheses");
+	std::string const testFile = GENERATE(
+		"invalid-parentheses",
+		"invalid-two-operators",
+		"invalid-identifier",
+		"invalid-distinct-operators");
 	auto const inputFilename = "files/" + testFile + ".txt";
 
 	LLParser parser(
